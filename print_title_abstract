@@ -1,0 +1,20 @@
+import requests
+from bs4 import BeautifulSoup
+
+url = 'https://www.frontiersin.org/articles/10.3389/fmars.2023.1213790/full'
+response = requests.get(url)
+soup = BeautifulSoup(response.content, 'html.parser')
+
+# The title usually resides in an <h1> or <h2> tag, but you may need to inspect the HTML to find the correct tag
+title_tag = 'h1'
+title = soup.find(title_tag).text
+
+print("Title of the article:", title)
+
+# Locate the div containing the abstract
+abstract_div = soup.find('div', class_='JournalAbstract')
+
+# Find the p tag within the div
+abstract = abstract_div.find('p').text
+
+print("Abstract of the article:", abstract)
